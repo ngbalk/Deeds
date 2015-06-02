@@ -1,12 +1,14 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('myApp', [
+var deedsApp = angular.module('deedsApp', [
   'ngRoute',
-  'myApp.view1',
-  'myApp.view2',
+  'deedsAppLoginModule',
+  'deedsAppSignUpModule',
+  'deedsAppFilters',
   'myApp.version'
-]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/view1'});
+]);
+
+deedsApp.config(['$routeProvider', function($routeProvider) {
+  $routeProvider.otherwise({redirectTo: '/login'});
 }]);
