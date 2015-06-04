@@ -9,8 +9,26 @@ var deedsAppSignUpModule = angular.module('deedsAppSignUpModule', ['ngRoute']);
  
 /* Controller */
 
-deedsAppSignUpModule.controller('SignUpCtrl', ['$scope', function($scope) {
-	$scope.name="Sign Up";
-	$scope.snippet = "Please sign up for a new account!"
-	$scope.password = "";
+deedsAppSignUpModule.controller('SignUpCtrl', ['$scope', '$location', function($scope, $location) {
+	$scope.name="Create Account";
+	$scope.snippet = "Create a new account!"
+	$scope.username = "";
+  	$scope.password = "";
+  	$scope.valid = $scope.password.length>=8;
+  $scope.signUp = function(event){
+    event.preventDefault();
+    var ref = new Firebase("https://burning-inferno-9477.firebaseio.com/");
+    ref.createUser({
+      email    : $scope.username,
+      password : $scope.password
+      }, function(error, userData) {
+    if (error) {
+      console.log("Error creating user:", error);
+    } else {
+      $location.path('/login');
+      $scope.$apply();	
+      console.log("Successfully created user account with uid:", userData.uid);
+    }
+    });
+  }
 }]);

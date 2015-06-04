@@ -6,7 +6,8 @@ var deedsApp = angular.module('deedsApp', [
   'deedsAppLoginModule',
   'deedsAppSignUpModule',
   'deedsAppFilters',
-  'myApp.version'
+  'myApp.version',
+  'firebase'
 ]);
 
 deedsApp.config(['$routeProvider', function($routeProvider) {
