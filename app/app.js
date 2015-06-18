@@ -5,6 +5,7 @@ var deedsApp = angular.module('deedsApp', [
   'ngRoute',
   'deedsAppLoginModule',
   'deedsAppSignUpModule',
+  'deedsAppHomeModule',
   'deedsAppFilters',
   'myApp.version',
   'firebase'

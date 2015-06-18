@@ -18,7 +18,8 @@ deedsAppLoginModule.config(['$routeProvider', function($routeProvider) {
   	controller: 'SignUpCtrl'
   })
   .when('/home', {
-    templateUrl: 'home/home.html'
+    templateUrl: 'home/home.html',
+    controller: 'HomeCtrl'
   });
 }]);
  
