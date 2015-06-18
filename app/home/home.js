@@ -23,21 +23,36 @@ deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', function($scop
   var ref = new Firebase("https://burning-inferno-9477.firebaseio.com/");
   var authData = ref.getAuth();
   $scope.newPost="New Post";
+  $scope.communitySelection=null;
 
-  //Redirect to login if not logged in
+  $scope.userCommunities=["Home", "School", "AEPi"];
+
+  //Redirect to login page if not already logged in
   if(!authData){
     $location.path('/login');
   }
 
   //Create reference to user's posts
-  var usersRef=ref.child("users");
-  var userPostsRef=usersRef.child(authData.uid);
+  var userRef=ref.child("users").child(authData.uid);
+  var userPostsRef=userRef.child("posts");
 
+  //Create reference to community's posts
+  var userCommunitiesRef=userRef.child("communities");
 
   //Realtime query user's posts
   userPostsRef.on("value", function(snapshot) {
     console.log(snapshot.val());
     $scope.userPosts=snapshot.val();
+  }, 
+    function (errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    }
+  );
+
+  //Realtime query user's communities
+  userCommunitiesRef.on("value", function(snapshot) {
+    console.log(snapshot.val());
+    $scope.userCommunities=snapshot.val();
   }, 
     function (errorObject) {
       console.log("The read failed: " + errorObject.code);
@@ -54,8 +69,16 @@ deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', function($scop
   //Submit Function
   $scope.submitPost=function(event){
 
-    userPostsRef.push($scope.newPost);
-    console.log("Succesfully submitted post: "+$scope.newPost);
+    var newPostObj = {
+      message: $scope.newPost,
+      deeds: 0,
+      community: $scope.communitySelection,
+      user: authData.uid,
+      clout: 0,
+      timestamp: Date.now()
+    };
+    userPostsRef.push(newPostObj);
+    console.log("Succesfully submitted post: "+newPostObj);
   }
 
 }]);
