@@ -15,7 +15,7 @@ deedsAppHomeModule.config(['$routeProvider', function($routeProvider) {
   });
 }]);
  
- /* Controller */
+ /* Main Controller */
 
 deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', function($scope, $location) {
   
@@ -23,7 +23,7 @@ deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', function($scop
   var ref = new Firebase("https://burning-inferno-9477.firebaseio.com/");
   var authData = ref.getAuth();
   $scope.newPost="New Post";
-  $scope.communitySelection=null;
+  $scope.communitySelection;
 
   $scope.userCommunities=["Home", "School", "AEPi"];
 
@@ -79,6 +79,26 @@ deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', function($scop
     };
     userPostsRef.push(newPostObj);
     console.log("Succesfully submitted post: "+newPostObj);
+  }
+
+}]);
+
+/* Create Community Controller */
+
+deedsAppHomeModule.controller('CreateCommunityCtrl', ['$scope', '$location', function($scope, $location) {
+  var ref = new Firebase("https://burning-inferno-9477.firebaseio.com/");
+  var authData = ref.getAuth();
+  var userRef=ref.child("users").child(authData.uid);
+  var userCommunitiesRef=userRef.child("communities");
+  $scope.newCommunityName;
+  $scope.submitNewCommunity = function($event){
+    var newCommunityObj = {
+      name: $scope.newCommunityName,
+      createdBy: authData.uid,
+      timestamp: Date.now()
+    }
+    userCommunitiesRef.push(newCommunityObj);
+    console.log("Succesfully created new community: "+newCommunityObj);
   }
 
 }]);

@@ -1,20 +1,22 @@
-<p>Home</p> 
+<h1>Home</h1> 
 <ul>
 	<li ng-repeat="post in userPosts">
-	{{post.message}}
-	{{post.deeds}}
+		{{post.message}}
+		{{post.deeds}}
 	</li>
 </ul>
 
 
-<select ng-model="userCommunitySelection" convert-to-number>
-  <option ng-repeat="community in userCommunities">{{community}}</option>
+<select ng-model="communitySelection" convert-to-number>
+  <option ng-repeat="community in userCommunities">
+  	{{community.name}}
+  </option>
 </select>
 
 
   <div class="form-group">
-  	<label class="col-sm-2 control-label">Create Post</label>
-    <div class="col-sm-10">
+  	<label>Create Post</label>
+    <div>
       <input class="form-control" ng-model="newPost">
       <button type="submit" class="btn btn-default" ng-click="submitPost($event)">Post</button>
     </div>
@@ -23,47 +25,23 @@
 
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Create New Community</button>
 
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+<div ng-controller="CreateCommunityCtrl" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Community Name</label>
-				<div class="col-sm-10">
-					<input class="form-control">
-						<button type="submit" class="btn btn-default">Create</button>
-				</div>
-			</div>
-    </div>
-  </div>
-</div>
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  Launch demo modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <h4 class="modal-title" id="myModalLabel">Create New Community</h4>
       </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+        <div class="modal-body">
+			<div class="form-group">
+				<label >Community Name</label>
+					<input class="form-control" ng-model="newCommunityName">
+					<button type="submit" class="btn btn-default" ng-click="submitNewCommunity($event)">Create</button>
+			</div>
+		</div>
     </div>
   </div>
 </div>
-
-  
-
 
 
 <button ng-click="logout($event)">logout</button>
