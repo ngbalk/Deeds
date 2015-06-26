@@ -1,6 +1,7 @@
 'use strict';
 
-// Declare app level module which depends on views, and components
+/* Bootstrapping app's modules */
+
 var deedsApp = angular.module('deedsApp', [
   'ngRoute',
   'deedsAppLoginModule',
@@ -8,7 +9,9 @@ var deedsApp = angular.module('deedsApp', [
   'deedsAppHomeModule',
   'deedsAppFilters',
   'myApp.version',
-  'firebase'
+  'firebase',
+  'deedsAppTemplateDirectives',
+  'deedsAppFeedModule'
 ]);
 
 deedsApp.config(['$routeProvider', function($routeProvider) {
