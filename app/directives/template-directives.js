@@ -21,3 +21,5 @@ deedsAppTemplateDirectives.directive('myFeedItem', function() {
 		templateUrl: 'templates/feed-item.html'
 	};
 });
+
+

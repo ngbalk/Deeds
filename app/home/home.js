@@ -84,8 +84,15 @@ deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', function($scop
       clout: 0,
       timestamp: Date.now()
     };
+
+    //Check to see that a community has been selected-->throw alert
+    if(!$scope.communitySelection){
+      //TODO
+      $('#select-community-error-alert-box').load('templates/select-community-error-alert-box.html');
+      return;
+    }
     userPostsRef.push(newPostObj);
-    communitiesRef.child($scope.communitySelection).push(newPostObj);
+    communitiesRef.child($scope.communitySelection).child("posts").push(newPostObj);
     console.log("Succesfully submitted post: "+newPostObj);
   }
 
@@ -105,9 +112,9 @@ deedsAppHomeModule.controller('CreateCommunityCtrl', ['$scope', '$location', fun
       name: $scope.newCommunityName,
       createdBy: authData.uid,
       timestamp: Date.now()
-    }
-    communitiesRef.push(newCommunityObj);
-    userCommunitiesRef.push(newCommunityObj);
+    };
+    communitiesRef.child($scope.newCommunityName).set(newCommunityObj);
+    userCommunitiesRef.child($scope.newCommunityName).set(newCommunityObj);
     console.log("Succesfully created new community: "+newCommunityObj);
   }
 
