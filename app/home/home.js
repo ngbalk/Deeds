@@ -17,18 +17,17 @@ deedsAppHomeModule.config(['$routeProvider', function($routeProvider) {
  
  /* Main Controller */
 
-deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', function($scope, $location) {
+deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', 'authWallRedirect', function($scope, $location, authWallRedirect) {
   
+  if(!authWallRedirect()){
+    return;
+  }
+
   //Variables
   var ref = new Firebase("https://burning-inferno-9477.firebaseio.com/");
   var authData = ref.getAuth();
   $scope.newPost="New Post";
   $scope.communitySelection;
-
-  //Redirect to login page if not already logged in
-  if(!authData){
-    $location.path('/login');
-  }
 
   //Create root user ref
   var userRef=ref.child("users").child(authData.uid);
@@ -100,7 +99,12 @@ deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', function($scop
 
 /* Create Community Controller */
 
-deedsAppHomeModule.controller('CreateCommunityCtrl', ['$scope', '$location', function($scope, $location) {
+deedsAppHomeModule.controller('CreateCommunityCtrl', ['$scope', '$location', 'authWallRedirect', function($scope, $location, authWallRedirect) {
+
+  if(!authWallRedirect()){
+    return;
+  }
+
   var ref = new Firebase("https://burning-inferno-9477.firebaseio.com/");
   var authData = ref.getAuth();
   var userRef=ref.child("users").child(authData.uid);

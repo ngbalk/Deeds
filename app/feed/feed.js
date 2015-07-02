@@ -12,7 +12,12 @@ deedsAppFeedModule.config(['$routeProvider', function($routeProvider) {
 }]);
 
 /* Controller */
-deedsAppFeedModule.controller('FeedCtrl', ['$scope', '$location', function($scope, $location){
+deedsAppFeedModule.controller('FeedCtrl', ['$scope', '$location', 'authWallRedirect', function($scope, $location, authWallRedirect){
+
+	if(!authWallRedirect()){
+		return;
+	}
+
 	var ref = new Firebase("https://burning-inferno-9477.firebaseio.com/");
   	var authData = ref.getAuth();
 
@@ -41,8 +46,11 @@ deedsAppFeedModule.controller('FeedCtrl', ['$scope', '$location', function($scop
   		}
   			
   		);
-  		console.log($scope.posts);
-  		$scope.$apply();
+  		//Update the DOM
+  		if(!$scope.$$phase) {
+  			$scope.$apply();
+  		}
+
   	});
 
 

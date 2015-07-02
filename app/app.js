@@ -11,7 +11,8 @@ var deedsApp = angular.module('deedsApp', [
   'myApp.version',
   'firebase',
   'deedsAppTemplateDirectives',
-  'deedsAppFeedModule'
+  'deedsAppFeedModule',
+  'deedsAppServices'
 ]);
 
 deedsApp.config(['$routeProvider', function($routeProvider) {
