@@ -22,4 +22,10 @@ deedsAppTemplateDirectives.directive('myFeedItem', function() {
 	};
 });
 
+deedsAppTemplateDirectives.directive('myCreatePostModal', function(){
+	return {
+		templateUrl: 'templates/create-post-modal.html'
+	};
+});
+
 

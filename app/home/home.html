@@ -1,21 +1,8 @@
 <h1>Home</h1> 
 <div id="select-community-error-alert-box"></div>
-<select ng-model="communitySelection" convert-to-number>
-  <option ng-repeat="community in userCommunities">{{community.name}}</option>
-</select>
 
-
-
-  <div class="form-group">
-  	<label>Create Post</label>
-    <div>
-      <input class="form-control" ng-model="newPost">
-      <button type="submit" class="btn btn-default" ng-click="submitPost($event)">Post</button>
-    </div>
-  </div>
-
-<div ng-controller="CreateCommunityCtrl">
-	<my-create-community-modal></my-create-community-modal>
-</div>
+<h3>Balance<span class="label label-default">{{deedsBalance}}</span></h3>
+<my-create-post-modal ng-controller="CreatePostCtrl"></my-create-post-modal><br>
+<my-create-community-modal ng-controller="CreateCommunityCtrl"></my-create-community-modal><br>
 
 <button ng-click="logout($event)">logout</button>

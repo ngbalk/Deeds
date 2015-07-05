@@ -28,6 +28,84 @@ deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', 'authWallRedir
   var authData = ref.getAuth();
   $scope.newPost="New Post";
   $scope.communitySelection;
+  $scope.deedsBalance=0;
+  var userData = {};
+
+  //Create root user ref
+  var userRef=ref.child("users").child(authData.uid);
+
+  //Create user data ref
+  var userDataRef=ref.child("users/"+authData.uid+"/data");
+
+  //Query user state
+  userDataRef.on("value", function(snapshot) {
+    console.log(snapshot.val());
+    $scope.deedsBalance=snapshot.val().deedsBalance;
+    // $scope.profileImg=userData.profileImg;
+    // $scope.acceptedDeeds=userData.acceptedDeeds;
+
+    //Update the DOM
+    if(!$scope.$$phase) {
+        $scope.$apply();
+    }
+  }, 
+    function (errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    }
+  );
+  console.log(userData);
+
+
+
+
+
+  //Logout Function
+  $scope.logout=function(event){
+    ref.unauth();
+    $location.path('/login');
+    console.log("Succesfully Logged Out User: "+authData.uid);
+  }
+
+
+}]);
+
+/* Create Community Controller */
+
+deedsAppHomeModule.controller('CreateCommunityCtrl', ['$scope', '$location', 'authWallRedirect', function($scope, $location, authWallRedirect) {
+
+  if(!authWallRedirect()){
+    return;
+  }
+
+  var ref = new Firebase("https://burning-inferno-9477.firebaseio.com/");
+  var authData = ref.getAuth();
+  var userRef=ref.child("users").child(authData.uid);
+  var communitiesRef=ref.child("communities");
+  var userCommunitiesRef=userRef.child("communities");
+  $scope.newCommunityName;
+  $scope.submitNewCommunity = function($event){
+    var newCommunityObj = {
+      name: $scope.newCommunityName,
+      createdBy: authData.uid,
+      timestamp: Date.now()
+    };
+    communitiesRef.child($scope.newCommunityName).set(newCommunityObj);
+    userCommunitiesRef.child($scope.newCommunityName).set(newCommunityObj);
+    console.log("Succesfully created new community: "+newCommunityObj);
+  }
+
+}]);
+
+deedsAppHomeModule.controller('CreatePostCtrl', ['$scope', '$location', 'authWallRedirect', function($scope, $location, authWallRedirect) {
+
+  if(!authWallRedirect()){
+    return;
+  }
+
+  var ref = new Firebase("https://burning-inferno-9477.firebaseio.com/");
+  var authData = ref.getAuth();
+  var userRef=ref.child("users").child(authData.uid);
+
 
   //Create root user ref
   var userRef=ref.child("users").child(authData.uid);
@@ -61,14 +139,11 @@ deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', 'authWallRedir
     }
   );
 
-  //Logout Function
-  $scope.logout=function(event){
-    ref.unauth();
-    $location.path('/login');
-    console.log("Succesfully Logged Out User: "+authData.uid);
-  }
+  $scope.newPost="";
+  $scope.communitySelection;
+  $scope.deedsAmount=1;
 
-  /* Submit New Post 
+    /* Submit New Post 
   *
   *  Store new post as a child of user's posts
   *  Store new post as a child of selected community's posts
@@ -77,7 +152,7 @@ deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', 'authWallRedir
 
     var newPostObj = {
       message: $scope.newPost,
-      deeds: 0,
+      deeds: $scope.deedsAmount,
       community: $scope.communitySelection,
       user: authData.uid,
       clout: 0,
@@ -93,33 +168,6 @@ deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', 'authWallRedir
     userPostsRef.push(newPostObj);
     communitiesRef.child($scope.communitySelection).child("posts").push(newPostObj);
     console.log("Succesfully submitted post: "+newPostObj);
-  }
-
-}]);
-
-/* Create Community Controller */
-
-deedsAppHomeModule.controller('CreateCommunityCtrl', ['$scope', '$location', 'authWallRedirect', function($scope, $location, authWallRedirect) {
-
-  if(!authWallRedirect()){
-    return;
-  }
-
-  var ref = new Firebase("https://burning-inferno-9477.firebaseio.com/");
-  var authData = ref.getAuth();
-  var userRef=ref.child("users").child(authData.uid);
-  var communitiesRef=ref.child("communities");
-  var userCommunitiesRef=userRef.child("communities");
-  $scope.newCommunityName;
-  $scope.submitNewCommunity = function($event){
-    var newCommunityObj = {
-      name: $scope.newCommunityName,
-      createdBy: authData.uid,
-      timestamp: Date.now()
-    };
-    communitiesRef.child($scope.newCommunityName).set(newCommunityObj);
-    userCommunitiesRef.child($scope.newCommunityName).set(newCommunityObj);
-    console.log("Succesfully created new community: "+newCommunityObj);
   }
 
 }]);
