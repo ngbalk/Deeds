@@ -39,7 +39,6 @@ deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', 'authWallRedir
 
   //Query user state
   userDataRef.on("value", function(snapshot) {
-    console.log(snapshot.val());
     $scope.deedsBalance=snapshot.val().deedsBalance;
     // $scope.profileImg=userData.profileImg;
     // $scope.acceptedDeeds=userData.acceptedDeeds;
@@ -53,7 +52,6 @@ deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', 'authWallRedir
       console.log("The read failed: " + errorObject.code);
     }
   );
-  console.log(userData);
 
 
 
@@ -121,7 +119,6 @@ deedsAppHomeModule.controller('CreatePostCtrl', ['$scope', '$location', 'authWal
 
   //Realtime query user's posts
   userPostsRef.on("value", function(snapshot) {
-    console.log(snapshot.val());
     $scope.userPosts=snapshot.val();
   }, 
     function (errorObject) {
@@ -131,7 +128,6 @@ deedsAppHomeModule.controller('CreatePostCtrl', ['$scope', '$location', 'authWal
 
   //Realtime query user's communities
   userCommunitiesRef.on("value", function(snapshot) {
-    console.log(snapshot.val());
     $scope.userCommunities=snapshot.val();
   }, 
     function (errorObject) {
@@ -156,17 +152,24 @@ deedsAppHomeModule.controller('CreatePostCtrl', ['$scope', '$location', 'authWal
       community: $scope.communitySelection,
       user: authData.uid,
       clout: 0,
-      timestamp: Date.now()
+      timestamp: Date.now(),
+      accepted: false,
+      acceptedBy: false
     };
 
     //Check to see that a community has been selected-->throw alert
     if(!$scope.communitySelection){
-      //TODO
       $('#select-community-error-alert-box').load('templates/select-community-error-alert-box.html');
       return;
     }
-    userPostsRef.push(newPostObj);
-    communitiesRef.child($scope.communitySelection).child("posts").push(newPostObj);
+    //Push post to ref/posts directory
+    var postId=ref.child('posts').push(newPostObj).key();
+
+    //Set post in ref/users/posts directory
+    userPostsRef.child(postId).set(newPostObj);
+
+    //Set post in ref/communities/posts directory
+    communitiesRef.child($scope.communitySelection+'/posts/'+postId).set(newPostObj);
     console.log("Succesfully submitted post: "+newPostObj);
   }
 

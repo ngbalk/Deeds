@@ -16,9 +16,17 @@ deedsAppTemplateDirectives.directive('myFeedItem', function() {
 	return {
 		transclude: true,
 		scope: {
-	      	myFeedTitle: '@myFeedTitle'
+	      	myFeedTitle: '@myFeedTitle',
+	      	myFeedDeeds: '@myFeedDeeds',
+	      	myFeedId: '@myFeedId'
     	},
-		templateUrl: 'templates/feed-item.html'
+		templateUrl: 'templates/feed-item.html',
+		controller: function($scope){
+			$scope.clickFeedItem = function(){
+				console.log($scope.myFeedId);
+				//Navigate to a page with more info on this deed
+			}
+		}
 	};
 });
 
