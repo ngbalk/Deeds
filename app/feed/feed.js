@@ -24,7 +24,7 @@ deedsAppFeedModule.controller('FeedCtrl', ['$scope', '$location', 'authWallRedir
 	}
 
 	var ref = new Firebase("https://burning-inferno-9477.firebaseio.com/");
-  var authData = ref.getAuth();
+  	var authData = ref.getAuth();
 
 	//Scope variables
 	$scope.communities=[];
@@ -43,8 +43,10 @@ deedsAppFeedModule.controller('FeedCtrl', ['$scope', '$location', 'authWallRedir
 			for(var communityName in $scope.communities){
 				if(communitySnapshot.val().name==communityName){
 					communitySnapshot.child("posts").forEach(function(postSnapshot){
-						//$scope.posts.push(postSnapshot.val());	
-            $scope.posts[postSnapshot.key()] = postSnapshot.val();
+						//$scope.posts.push(postSnapshot.val());
+						if(postSnapshot.val().accepted==false){
+            				$scope.posts[postSnapshot.key()] = postSnapshot.val();
+            			}
 					});	
 				}
 					
@@ -52,7 +54,6 @@ deedsAppFeedModule.controller('FeedCtrl', ['$scope', '$location', 'authWallRedir
 		}
 			
 		);
-    console.log($scope.posts);
 		//Update the DOM
 		if(!$scope.$$phase) {
 			$scope.$apply();
