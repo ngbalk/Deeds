@@ -28,6 +28,7 @@ deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', 'authWallRedir
   var authData = ref.getAuth();
   $scope.newPost="New Post";
   $scope.communitySelection;
+  $scope.posts;
   $scope.deedsBalance=0;
   var userData = {};
 
@@ -52,6 +53,18 @@ deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', 'authWallRedir
       console.log("The read failed: " + errorObject.code);
     }
   );
+
+  //Query user posts
+  userRef.child('deedsQ').on("value", function(snapshot) {
+    $scope.posts=snapshot.val();
+    console.log($scope.posts);
+
+    //Update the DOM
+    if(!$scope.$$phase) {
+        $scope.$apply();
+    }
+
+  })
 
 
 

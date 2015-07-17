@@ -1,6 +1,17 @@
-<h1>Home</h1> 
-<h3>Balance<span class="label label-default">{{deedsBalance}}</span></h3>
-<my-create-post-modal ng-controller="CreatePostCtrl"></my-create-post-modal><br>
-<my-create-community-modal ng-controller="CreateCommunityCtrl"></my-create-community-modal><br>
+<div class='home-layout'>
+	<h1>Home</h1> 
+	<h3>Balance<span class="label label-default">{{deedsBalance}}</span></h3>
+	<my-create-post-modal ng-controller="CreatePostCtrl"></my-create-post-modal><br>
+	<my-create-community-modal ng-controller="CreateCommunityCtrl"></my-create-community-modal><br>
+	<button ng-click="logout($event)">logout</button>
+</div>
 
-<button ng-click="logout($event)">logout</button>
+<div class='home-layout'>
+	<div ng-repeat="(key, value) in posts">
+	<a href="#/deed/{{key}}">
+	<my-feed-item my-feed-id="{{key}}" my-feed-title="{{value.community}}" my-feed-deeds="{{value.deeds}}">
+	{{value.message}}
+	</my-feed-item>
+</a>
+</div>
+</div>
