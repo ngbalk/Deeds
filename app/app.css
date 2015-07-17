@@ -32,3 +32,8 @@
 .home-layout {
   display: inline-block;
 }
+
+.scrollable-box {
+  height: 400px;
+  overflow: scroll;
+}

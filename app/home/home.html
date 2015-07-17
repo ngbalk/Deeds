@@ -6,12 +6,32 @@
 	<button ng-click="logout($event)">logout</button>
 </div>
 
-<div class='home-layout'>
-	<div ng-repeat="(key, value) in posts">
-	<a href="#/deed/{{key}}">
-	<my-feed-item my-feed-id="{{key}}" my-feed-title="{{value.community}}" my-feed-deeds="{{value.deeds}}">
-	{{value.message}}
-	</my-feed-item>
-</a>
+<div class='home-layout jumbotron'>
+	<div class="page-header">
+		<h2>Accepted Deeds</h2>
+	</div>
+	<div class="scrollable-box">
+		<div ng-repeat="(key, value) in acceptedPosts">
+			<a href="#/deed/{{key}}">
+				<my-feed-item my-feed-id="{{key}}" my-feed-title="{{value.community}}" my-feed-deeds="{{value.deeds}}">
+				{{value.message}}
+				</my-feed-item>
+			</a>
+		</div>
+	</div>
 </div>
+
+<div class='home-layout jumbotron'>
+	<div class="page-header">
+		<h2>Outstanding Deeds</h2>
+	</div>
+	<div class="scrollable-box">
+		<div ng-repeat="(key, value) in outstandingPosts">
+			<a href="#/deed/{{key}}">
+				<my-feed-item my-feed-id="{{key}}" my-feed-title="{{value.community}}" my-feed-deeds="{{value.deeds}}">
+				{{value.message}}
+				</my-feed-item>
+			</a>
+		</div>
+	</div>
 </div>

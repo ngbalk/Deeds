@@ -28,7 +28,8 @@ deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', 'authWallRedir
   var authData = ref.getAuth();
   $scope.newPost="New Post";
   $scope.communitySelection;
-  $scope.posts;
+  $scope.acceptedPosts;
+  $scope.outstandingPosts = {};
   $scope.deedsBalance=0;
   var userData = {};
 
@@ -54,16 +55,33 @@ deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', 'authWallRedir
     }
   );
 
-  //Query user posts
+  //Query user's accepted posts
   userRef.child('deedsQ').on("value", function(snapshot) {
-    $scope.posts=snapshot.val();
-    console.log($scope.posts);
+    $scope.acceptedPosts=snapshot.val();
+    console.log($scope.acceptedPosts);
 
     //Update the DOM
     if(!$scope.$$phase) {
         $scope.$apply();
     }
 
+  })
+
+  //Query user's outstanding posts
+  userRef.child('posts').on("value", function(snapshot) {
+    snapshot.forEach(function(post){
+    if(!post.val().completed){
+        $scope.outstandingPosts[post.key()]=post.val();
+    }
+      
+    })
+
+    //Update the DOM
+    if(!$scope.$$phase) {
+        $scope.$apply();
+    }
+
+    console.log($scope.outstandingPosts);
   })
 
 
@@ -167,7 +185,8 @@ deedsAppHomeModule.controller('CreatePostCtrl', ['$scope', '$location', 'authWal
       clout: 0,
       timestamp: Date.now(),
       accepted: false,
-      acceptedBy: false
+      acceptedBy: false,
+      completed: false
     };
 
     //Check to see that a community has been selected-->throw alert
