@@ -21,10 +21,25 @@ deedsAppTemplateDirectives.directive('myFeedItem', function() {
 	      	myFeedId: '@myFeedId'
     	},
 		templateUrl: 'templates/feed-item.html',
-		controller: function($scope){
+		controller: function($scope, $location){
 			$scope.clickFeedItem = function(){
-				console.log($scope.myFeedId);
-				//Navigate to a page with more info on this deed
+				var ref = new Firebase("https://burning-inferno-9477.firebaseio.com/");
+  				var authData = ref.getAuth();
+  				ref.child('posts/'+$scope.myFeedId).on("value", function(snapshot){
+  					if(snapshot.val().user==authData.uid){
+  						console.log(snapshot.val().user + " : " + authData.uid);
+  						$location.path("/my-deed/"+$scope.myFeedId);
+  					}
+  					else{
+  						console.log("this is not my post");
+  						$location.path("/deed/"+$scope.myFeedId);
+  					}
+  					//Update the DOM
+					if(!$scope.$$phase) {
+						$scope.$apply();
+					}	
+  				})
+				
 			}
 		}
 	};

@@ -13,6 +13,13 @@ deedsAppFeedModule.config(['$routeProvider', function($routeProvider) {
   .when('/deed/:deedId', {
     templateUrl: 'deed/deed.html',
     controller: 'DeedCtrl'
+  })
+  .when('/my-deed/:deedId', {
+    templateUrl: 'deed/my-deed.html',
+    controller: 'DeedCtrl'
+  })
+  .when('/deed-removal-splash', {
+    templateUrl: 'deed/deed-removal-splash.html',
   });
 }]);
 

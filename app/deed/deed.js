@@ -7,7 +7,7 @@ var deedsAppDeedModule = angular.module('deedsAppDeedModule', []);
 
 /* Controller */
 
-deedsAppDeedModule.controller('DeedCtrl', ['$scope', 'authWallRedirect', '$routeParams', function($scope, authWallRedirect, $routeParams){
+deedsAppDeedModule.controller('DeedCtrl', ['$scope', 'authWallRedirect', '$routeParams', '$location', function($scope, authWallRedirect, $routeParams, $location){
 
 	//Verify user is logged in
 	if(!authWallRedirect()){
@@ -46,12 +46,25 @@ deedsAppDeedModule.controller('DeedCtrl', ['$scope', 'authWallRedirect', '$route
   		//Update ref/communities/communityName/posts directory
   		ref.child('communities/'+$scope.deedObj.community+'/posts/'+$routeParams.deedId).set($scope.deedObj);
 
-  		//Update ref/uid/deedsQ directory
+  		//Update ref/users/uid/deedsQ directory
   		ref.child("users/"+authData.uid+"/deedsQ/"+$routeParams.deedId).set($scope.deedObj);
 
   		console.log("Succesfully accepted deed "+ $routeParams.deedId);
+  	}
 
+  	$scope.deleteDeed=function(event){
 
+  		//Remove deed from ref/communities/communityName/posts directory
+  		ref.child('communities/'+$scope.deedObj.community+'/posts/'+$routeParams.deedId).remove();
+
+  		//Remove deed from ref/users/uid/deedsQ directory
+  		ref.child("users/"+authData.uid+"/deedsQ/"+$routeParams.deedId).remove();
+
+  		//Remove deed from ref/posts directory
+  		ref.child('posts/'+$routeParams.deedId).remove();
+
+  		$location.path('/deed-removal-splash');
+  		return;
 
   	}
 

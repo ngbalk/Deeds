@@ -1,8 +1,6 @@
 <div ng-repeat="(key, value) in posts">
-<a href="#/deed/{{key}}">
 	<my-feed-item my-feed-id="{{key}}" my-feed-title="{{value.community}}" my-feed-deeds="{{value.deeds}}">
 	{{value.message}}
 	</my-feed-item>
-</a>
 </div>
   
