@@ -170,7 +170,7 @@ deedsAppHomeModule.controller('CreatePostCtrl', ['$scope', '$location', 'authWal
   $scope.communitySelection;
   $scope.deedsAmount=1;
 
-    /* Submit New Post 
+  /* Submit New Post 
   *
   *  Store new post as a child of user's posts
   *  Store new post as a child of selected community's posts

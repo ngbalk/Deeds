@@ -57,8 +57,12 @@ deedsAppDeedModule.controller('DeedCtrl', ['$scope', 'authWallRedirect', '$route
   		//Remove deed from ref/communities/communityName/posts directory
   		ref.child('communities/'+$scope.deedObj.community+'/posts/'+$routeParams.deedId).remove();
 
+  		// //Remove deed from ref/users/uid/deedsQ directory
+  		// ref.child("users/"+authData.uid+"/deedsQ/"+$routeParams.deedId).remove();
+
   		//Remove deed from ref/users/uid/deedsQ directory
-  		ref.child("users/"+authData.uid+"/deedsQ/"+$routeParams.deedId).remove();
+  		ref.child("users/"+authData.uid+"/posts/"+$routeParams.deedId).remove();
+  		console.log(ref.child("users/"+authData.uid+"/posts/"+$routeParams.deedId).toString());
 
   		//Remove deed from ref/posts directory
   		ref.child('posts/'+$routeParams.deedId).remove();
