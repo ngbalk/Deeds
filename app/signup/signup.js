@@ -25,10 +25,19 @@ deedsAppSignUpModule.controller('SignUpCtrl', ['$scope', '$location', function($
     if (error) {
       console.log("Error creating user:", error);
     } else {
+
+      //Initialize deedBalance
+      ref.child('users/'+userData.uid+'/data/deedsBalance').set(10);
+
+      //Rediret to login page
       $location.path('/login');
+
+      //Update DOM
       $scope.$apply();	
       console.log("Successfully created user account with uid:", userData.uid);
     }
     });
+
+
   }
 }]);

@@ -8,12 +8,14 @@ var deedsAppTemplateDirectives = angular.module('deedsAppTemplateDirectives', []
 
 deedsAppTemplateDirectives.directive('myCreateCommunityModal', function() {
 	return {
+		restrict: 'E',
 		templateUrl: 'templates/create-community-modal.html'
 	};
 });
 
 deedsAppTemplateDirectives.directive('myFeedItem', function() {
 	return {
+		restrict: 'E',
 		transclude: true,
 		scope: {
 	      	myFeedTitle: '@myFeedTitle',
@@ -47,7 +49,16 @@ deedsAppTemplateDirectives.directive('myFeedItem', function() {
 
 deedsAppTemplateDirectives.directive('myCreatePostModal', function(){
 	return {
+		restrict: 'E',
 		templateUrl: 'templates/create-post-modal.html'
+	};
+});
+
+
+deedsAppTemplateDirectives.directive('myEditPostModal', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'templates/edit-post-modal.html'
 	};
 });
 
