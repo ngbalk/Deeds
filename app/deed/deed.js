@@ -18,6 +18,7 @@ deedsAppDeedModule.controller('DeedCtrl', ['$scope', 'authWallRedirect', '$route
 	var ref = new Firebase("https://burning-inferno-9477.firebaseio.com/");
   	var authData = ref.getAuth();
   	$scope.deedObj;
+  	$scope.deedId=$routeParams.deedId;
 
   	//Query post
   	ref.child('posts/'+$routeParams.deedId).on("value", function(snapshot) {
@@ -62,7 +63,6 @@ deedsAppDeedModule.controller('DeedCtrl', ['$scope', 'authWallRedirect', '$route
 
   		//Remove deed from ref/users/uid/deedsQ directory
   		ref.child("users/"+authData.uid+"/posts/"+$routeParams.deedId).remove();
-  		console.log(ref.child("users/"+authData.uid+"/posts/"+$routeParams.deedId).toString());
 
   		//Remove deed from ref/posts directory
   		ref.child('posts/'+$routeParams.deedId).remove();

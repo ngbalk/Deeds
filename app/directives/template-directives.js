@@ -41,7 +41,6 @@ deedsAppTemplateDirectives.directive('myFeedItem', function() {
 						$scope.$apply();
 					}	
   				})
-				
 			}
 		}
 	};
@@ -58,7 +57,31 @@ deedsAppTemplateDirectives.directive('myCreatePostModal', function(){
 deedsAppTemplateDirectives.directive('myEditPostModal', function(){
 	return {
 		restrict: 'E',
-		templateUrl: 'templates/edit-post-modal.html'
+		scope: {
+	      	myDeedId: '@myDeedId'
+    	},
+		templateUrl: 'templates/edit-post-modal.html',
+		controller: function($scope){
+			var ref = new Firebase("https://burning-inferno-9477.firebaseio.com/");
+			$scope.deedObj = {};
+
+			ref.child('posts/'+$scope.myDeedId).on("value", function(snapshot){
+  				$scope.deedObj=snapshot.val();
+  			});
+
+  			$scope.updateDeed=function(event){
+
+	  			//Update posts/myDeedId
+				ref.child('posts/'+$scope.myDeedId).set($scope.deedObj);
+
+				//Update users/userId/posts/myDeedId
+				ref.child('users/'+ref.getAuth().uid+'/posts/'+$scope.myDeedId).set($scope.deedObj);
+
+				//Update communities/community/posts/myDeedId
+				ref.child('communities/'+$scope.deedObj.community+'/posts/'+$scope.myDeedId).set($scope.deedObj);
+  			}
+			
+		}
 	};
 });
 

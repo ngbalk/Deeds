@@ -1,20 +1,17 @@
 <div class="jumbotron">
-  <h1>
-  	{{deedObj.community}}
-  	<span class="label label-default">Deeds: {{deedObj.deeds}}</span>
-  </h1>
-  <p><b>{{deedObj.user}}</b></p>
-  <p>{{deedObj.message}}</p>
-  
-  <h2>
-	<my-edit-post-modal></my-edit-post-modal>
-	<button ng-click="deleteDeed($event)">
-	  	<div style="display: inline-block; cursor: pointer; cursor: hand;">
-		  	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-		  	<p>Delete</p>
-	 	</div>
-	 </button>
-  </h2>
-
-
+	<h1>
+		{{deedObj.community}}
+		<span class="label label-default">Deeds: {{deedObj.deeds}}</span>
+	</h1>
+	<p><b>{{deedObj.user}}</b></p>
+	<p>{{deedObj.message}}</p>
+	<my-edit-post-modal my-deed-id="{{deedId}}"></my-edit-post-modal>
+	<h2>
+		<button ng-click="deleteDeed($event)">
+			<div style="display: inline-block; cursor: pointer; cursor: hand;">
+				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+				<p>Delete</p>
+			</div>
+		</button>
+	</h2>
 </div>
