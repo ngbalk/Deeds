@@ -85,4 +85,26 @@ deedsAppTemplateDirectives.directive('myEditPostModal', function(){
 	};
 });
 
+deedsAppTemplateDirectives.directive('mySearchCommunityModal', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'templates/search-community-modal.html',
+		controller: function($scope){
+			var ref = new Firebase("https://burning-inferno-9477.firebaseio.com/");
+
+			var $scope.communityList = {};
+
+			ref.child('communities').on('value', function(snapshot){
+				$scope.communityList=snapshot.val();
+			});
+
+			//TODO: build out this function with real values
+			$scope.joinCommunity=function(event){
+				ref.child("users/"+ref.getAuth().uid+"/communities/"+"SELECTED-COMMUNITY.name").set("SELECTED-COMMUNITY");
+
+			}
+		}
+	}
+});
+
 

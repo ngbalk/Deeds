@@ -55,7 +55,7 @@ deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', 'authWallRedir
     }
   );
 
-  //Query user's accepted posts
+  //Query user's accepted posts TODO: This should use saved deedIds to query the most recently updated value from ref/posts
   userRef.child('deedsQ').on("value", function(snapshot) {
     $scope.acceptedPosts=snapshot.val();
     console.log($scope.acceptedPosts);

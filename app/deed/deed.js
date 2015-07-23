@@ -72,6 +72,31 @@ deedsAppDeedModule.controller('DeedCtrl', ['$scope', 'authWallRedirect', '$route
 
   	}
 
+  	$scope.deedCompleted=function(event){
+
+  		if($scope.deedObj.completed==false){
+
+	  		//Update deedObj.completed status to true
+	  		$scope.deedObj.completed=true;
+
+	  		//Update ref/posts directory
+	  		ref.child('posts/'+$routeParams.deedId).set($scope.deedObj);
+
+	  		//Update ref/communities/communityName/posts directory
+	  		ref.child('communities/'+$scope.deedObj.community+'/posts/'+$routeParams.deedId).set($scope.deedObj);
+
+	  		//Update ref/users/posts directory
+	  		ref.child("users/"+authData.uid+"/posts/"+$routeParams.deedId).set($scope.deedObj);
+
+	  		//Award deeds to completing user
+	  		ref.child("users/"+$scope.deedObj.acceptedBy+"/data/deedsBalance").on("value", function(snapshot){
+	  			ref.child("users/"+$scope.deedObj.acceptedBy+"/data/deedsBalance").set(snapshot.val() + $scope.deedObj.deeds);
+	  		});
+
+  		}
+
+  	}
+
   	//Update the DOM
   	if(!$scope.$$phase) {
 		$scope.$apply();
