@@ -92,19 +92,51 @@ deedsAppTemplateDirectives.directive('mySearchCommunityModal', function(){
 		controller: function($scope){
 			var ref = new Firebase("https://burning-inferno-9477.firebaseio.com/");
 
-			var $scope.communityList = {};
+			$scope.communityList = {};
 
 			ref.child('communities').on('value', function(snapshot){
 				$scope.communityList=snapshot.val();
+				console.log($scope.communityList);
+
+				//Update the DOM
+				if(!$scope.$$phase) {
+					$scope.$apply();
+				}	
 			});
-
-			//TODO: build out this function with real values
-			$scope.joinCommunity=function(event){
-				ref.child("users/"+ref.getAuth().uid+"/communities/"+"SELECTED-COMMUNITY.name").set("SELECTED-COMMUNITY");
-
-			}
+			console.log($scope.communityList);
 		}
 	}
 });
 
+deedsAppTemplateDirectives.directive('myCommunityItem', function(){
+	return {
+		restrict: 'E',
+		scope: {
+			myCommunityId: "@myCommunityId",
+			myCommunityName: "@myCommunityName",
+			myCommunityHost: "@myCommunityHost"
+		},
+		templateUrl: 'templates/community-item.html',
+		controller: function($scope, $location){
+			var ref = new Firebase("https://burning-inferno-9477.firebaseio.com/");
 
+			
+			$scope.clickCommunityItem=function(event){
+
+				//Remove Modal
+				$('#search-community-modal').modal('hide');
+				$('body').removeClass('modal-open');
+				$('.modal-backdrop').remove();
+
+				//Navigate to community landing page
+				$location.path("/community/"+$scope.myCommunityName);
+				joinCommunity();
+			}
+			
+			//TODO: build out this function with real values
+			var joinCommunity=function(){
+				ref.child("users/"+ref.getAuth().uid+"/communities/"+$scope.myCommunityName).set(1);
+			}
+		}
+	}
+});

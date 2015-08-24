@@ -13,7 +13,8 @@ var deedsApp = angular.module('deedsApp', [
   'deedsAppTemplateDirectives',
   'deedsAppFeedModule',
   'deedsAppServices',
-  'deedsAppDeedModule'
+  'deedsAppDeedModule',
+  'deedsAppCommunityModule'
 ]);
 
 deedsApp.config(['$routeProvider', function($routeProvider) {
