@@ -30,7 +30,6 @@ deedsAppCommunityModule.controller('CommunityCtrl', ['$scope', 'authWallRedirect
   	
 	ref.child("communities/"+$routeParams.myCommunityId).on("value", function(snapshot) {
 		$scope.communityObj=snapshot.val();
-		console.log($scope.communityObj);
 
 		//Update the DOM
     	if(!$scope.$$phase) {
@@ -44,8 +43,6 @@ deedsAppCommunityModule.controller('CommunityCtrl', ['$scope', 'authWallRedirect
 
 		//Update Community's member list
 		ref.child("communities/"+$routeParams.myCommunityId+"/members/"+authData.uid).set(true);
-
-		console.log("User " + authData.uid + " joined community " + $scope.communityObj.name);
 	}
 
 }]);

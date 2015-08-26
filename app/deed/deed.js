@@ -45,18 +45,16 @@ deedsAppDeedModule.controller('DeedCtrl', ['$scope', 'authWallRedirect', '$route
   		ref.child('posts/'+$routeParams.deedId).set($scope.deedObj);
 
   		//Update ref/communities/communityName/posts directory
-  		ref.child('communities/'+$scope.deedObj.community+'/posts/'+$routeParams.deedId).set($scope.deedObj);
+  		ref.child('communities/'+$scope.deedObj.communityId+'/posts/'+$routeParams.deedId).set($scope.deedObj);
 
   		//Update ref/users/uid/deedsQ directory
   		ref.child("users/"+authData.uid+"/deedsQ/"+$routeParams.deedId).set($scope.deedObj);
-
-  		console.log("Succesfully accepted deed "+ $routeParams.deedId);
   	}
 
   	$scope.deleteDeed=function(event){
 
   		//Remove deed from ref/communities/communityName/posts directory
-  		ref.child('communities/'+$scope.deedObj.community+'/posts/'+$routeParams.deedId).remove();
+  		ref.child('communities/'+$scope.deedObj.communityId+'/posts/'+$routeParams.deedId).remove();
 
   		// //Remove deed from ref/users/uid/deedsQ directory
   		// ref.child("users/"+authData.uid+"/deedsQ/"+$routeParams.deedId).remove();
@@ -83,7 +81,7 @@ deedsAppDeedModule.controller('DeedCtrl', ['$scope', 'authWallRedirect', '$route
 	  		ref.child('posts/'+$routeParams.deedId).set($scope.deedObj);
 
 	  		//Update ref/communities/communityName/posts directory
-	  		ref.child('communities/'+$scope.deedObj.community+'/posts/'+$routeParams.deedId).set($scope.deedObj);
+	  		ref.child('communities/'+$scope.deedObj.communityId+'/posts/'+$routeParams.deedId).set($scope.deedObj);
 
 	  		//Update ref/users/posts directory
 	  		ref.child("users/"+authData.uid+"/posts/"+$routeParams.deedId).set($scope.deedObj);
@@ -98,7 +96,6 @@ deedsAppDeedModule.controller('DeedCtrl', ['$scope', 'authWallRedirect', '$route
 		  	if(!$scope.$$phase) {
 				$scope.$apply();
 			}
-			console.log(currentDeedsBalance);
 	  		ref.child("users/"+$scope.deedObj.acceptedBy+"/data/deedsBalance").set(currentDeedsBalance + $scope.deedObj.deeds);
 
   		}

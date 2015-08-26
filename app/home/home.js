@@ -58,7 +58,6 @@ deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', 'authWallRedir
   //Query user's accepted posts TODO: This should use saved deedIds to query the most recently updated value from ref/posts
   userRef.child('deedsQ').on("value", function(snapshot) {
     $scope.acceptedPosts=snapshot.val();
-    console.log($scope.acceptedPosts);
 
     //Update the DOM
     if(!$scope.$$phase) {
@@ -80,8 +79,6 @@ deedsAppHomeModule.controller('HomeCtrl', ['$scope', '$location', 'authWallRedir
     if(!$scope.$$phase) {
         $scope.$apply();
     }
-
-    console.log($scope.outstandingPosts);
   })
 
 
@@ -122,7 +119,6 @@ deedsAppHomeModule.controller('CreateCommunityCtrl', ['$scope', '$location', 'au
     
     //Should a user automatically join the community he creates?
     //userCommunitiesRef.child($scope.newCommunityName).set(newCommunityObj);
-    console.log("Succesfully created new community: "+newCommunityObj);
   }
 
 }]);
@@ -162,7 +158,6 @@ deedsAppHomeModule.controller('CreatePostCtrl', ['$scope', '$location', 'authWal
   //Realtime query user's communities
   userCommunitiesRef.on("value", function(snapshot) {
     $scope.userCommunities=snapshot.val();
-    console.log($scope.userCommunities);
 
     //Update the DOM
     if(!$scope.$$phase) {
@@ -211,7 +206,6 @@ deedsAppHomeModule.controller('CreatePostCtrl', ['$scope', '$location', 'authWal
 
     //Set post in ref/communities/posts directory
     communitiesRef.child($scope.communitySelection+'/posts/'+postId).set(newPostObj);
-    console.log("Succesfully submitted post: "+newPostObj);
   }
 
 }]);

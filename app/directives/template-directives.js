@@ -27,14 +27,11 @@ deedsAppTemplateDirectives.directive('myFeedItem', function() {
 			$scope.clickFeedItem = function(){
 				var ref = new Firebase("https://burning-inferno-9477.firebaseio.com/");
   				var authData = ref.getAuth();
-  				console.log($scope.myFeedItemId);
   				ref.child('posts/'+$scope.myFeedItemId).on("value", function(snapshot){
   					if(snapshot.val().user==authData.uid){
-  						console.log(snapshot.val().user + " : " + authData.uid);
   						$location.path("/my-deed/"+$scope.myFeedItemId);
   					}
   					else{
-  						console.log("this is not my post");
   						$location.path("/deed/"+$scope.myFeedItemId);
   					}
   					//Update the DOM
@@ -97,14 +94,12 @@ deedsAppTemplateDirectives.directive('mySearchCommunityModal', function(){
 
 			ref.child('communities').on('value', function(snapshot){
 				$scope.communityList=snapshot.val();
-				console.log($scope.communityList);
 
 				//Update the DOM
 				if(!$scope.$$phase) {
 					$scope.$apply();
 				}	
 			});
-			console.log($scope.communityList);
 		}
 	}
 });
