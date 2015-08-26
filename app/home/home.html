@@ -13,8 +13,8 @@
 	</div>
 	<div class="scrollable-box">
 		<div ng-repeat="(key, value) in acceptedPosts">
-			<a href="#/deed/{{key}}">
-				<my-feed-item my-feed-id="{{key}}" my-feed-title="{{value.community}}" my-feed-deeds="{{value.deeds}}">
+			<a href="">
+				<my-feed-item my-feed-item-id="{{key}}" my-feed-item-name="{{value.communityName}}" my-feed-item-deeds="{{value.deeds}}">
 				{{value.message}}
 				</my-feed-item>
 			</a>
@@ -28,8 +28,8 @@
 	</div>
 	<div class="scrollable-box">
 		<div ng-repeat="(key, value) in outstandingPosts">
-			<a href="#/deed/{{key}}">
-				<my-feed-item my-feed-id="{{key}}" my-feed-title="{{value.community}}" my-feed-deeds="{{value.deeds}}">
+			<a href="">
+				<my-feed-item my-feed-item-id="{{key}}" my-feed-item-title="{{value.communityName}}" my-feed-item-deeds="{{value.deeds}}">
 				{{value.message}}
 				</my-feed-item>
 			</a>

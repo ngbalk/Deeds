@@ -38,7 +38,7 @@ deedsAppFeedModule.controller('FeedCtrl', ['$scope', '$location', 'authWallRedir
 	$scope.posts=[];
 
 	//Query Firebase for all of the user's resident communities.
-	ref.child("users").child(authData.uid).child("communities").on("value", function(snapshot){
+	ref.child("users/"+authData.uid+"/communities").on("value", function(snapshot){
 		$scope.communities=snapshot.val();
 	});
 
@@ -47,27 +47,18 @@ deedsAppFeedModule.controller('FeedCtrl', ['$scope', '$location', 'authWallRedir
 	ref.child("communities").on("value", function(snapshot){
 		$scope.posts={};
 		snapshot.forEach(function(communitySnapshot){
-			for(var communityName in $scope.communities){
-				if(communitySnapshot.val().name==communityName){
-					communitySnapshot.child("posts").forEach(function(postSnapshot){
-						//$scope.posts.push(postSnapshot.val());
-						if(postSnapshot.val().accepted==false){
-            				$scope.posts[postSnapshot.key()] = postSnapshot.val();
-            			}
-					});	
-				}
-					
+			if(communitySnapshot.child("members/"+authData.uid).exists()){
+				communitySnapshot.child("posts").forEach(function(postSnapshot){
+					if(postSnapshot.val().accepted==false){
+	            		$scope.posts[postSnapshot.key()]=postSnapshot.val();
+	            	}
+				});					
 			}
-		}
-			
-		);
+		});
 		//Update the DOM
 		if(!$scope.$$phase) {
 			$scope.$apply();
-		}
-
+		}	
 	});
-
-
 }]);
 

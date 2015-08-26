@@ -118,8 +118,10 @@ deedsAppHomeModule.controller('CreateCommunityCtrl', ['$scope', '$location', 'au
       createdBy: authData.uid,
       timestamp: Date.now()
     };
-    communitiesRef.child($scope.newCommunityName).set(newCommunityObj);
-    userCommunitiesRef.child($scope.newCommunityName).set(newCommunityObj);
+    communitiesRef.push(newCommunityObj);
+    
+    //Should a user automatically join the community he creates?
+    //userCommunitiesRef.child($scope.newCommunityName).set(newCommunityObj);
     console.log("Succesfully created new community: "+newCommunityObj);
   }
 
@@ -160,6 +162,12 @@ deedsAppHomeModule.controller('CreatePostCtrl', ['$scope', '$location', 'authWal
   //Realtime query user's communities
   userCommunitiesRef.on("value", function(snapshot) {
     $scope.userCommunities=snapshot.val();
+    console.log($scope.userCommunities);
+
+    //Update the DOM
+    if(!$scope.$$phase) {
+        $scope.$apply();
+    }
   }, 
     function (errorObject) {
       console.log("The read failed: " + errorObject.code);
@@ -180,7 +188,8 @@ deedsAppHomeModule.controller('CreatePostCtrl', ['$scope', '$location', 'authWal
     var newPostObj = {
       message: $scope.newPost,
       deeds: $scope.deedsAmount,
-      community: $scope.communitySelection,
+      communityId: $scope.communitySelection,
+      communityName: $scope.userCommunities[$scope.communitySelection].name,
       user: authData.uid,
       clout: 0,
       timestamp: Date.now(),

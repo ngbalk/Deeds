@@ -18,23 +18,24 @@ deedsAppTemplateDirectives.directive('myFeedItem', function() {
 		restrict: 'E',
 		transclude: true,
 		scope: {
-	      	myFeedTitle: '@myFeedTitle',
-	      	myFeedDeeds: '@myFeedDeeds',
-	      	myFeedId: '@myFeedId'
+	      	myFeedItemName: '@myFeedItemName',
+	      	myFeedItemDeeds: '@myFeedItemDeeds',
+	      	myFeedItemId: '@myFeedItemId'
     	},
 		templateUrl: 'templates/feed-item.html',
 		controller: function($scope, $location){
 			$scope.clickFeedItem = function(){
 				var ref = new Firebase("https://burning-inferno-9477.firebaseio.com/");
   				var authData = ref.getAuth();
-  				ref.child('posts/'+$scope.myFeedId).on("value", function(snapshot){
+  				console.log($scope.myFeedItemId);
+  				ref.child('posts/'+$scope.myFeedItemId).on("value", function(snapshot){
   					if(snapshot.val().user==authData.uid){
   						console.log(snapshot.val().user + " : " + authData.uid);
-  						$location.path("/my-deed/"+$scope.myFeedId);
+  						$location.path("/my-deed/"+$scope.myFeedItemId);
   					}
   					else{
   						console.log("this is not my post");
-  						$location.path("/deed/"+$scope.myFeedId);
+  						$location.path("/deed/"+$scope.myFeedItemId);
   					}
   					//Update the DOM
 					if(!$scope.$$phase) {
@@ -78,7 +79,7 @@ deedsAppTemplateDirectives.directive('myEditPostModal', function(){
 				ref.child('users/'+ref.getAuth().uid+'/posts/'+$scope.myDeedId).set($scope.deedObj);
 
 				//Update communities/community/posts/myDeedId
-				ref.child('communities/'+$scope.deedObj.community+'/posts/'+$scope.myDeedId).set($scope.deedObj);
+				ref.child('communities/'+$scope.deedObj.communityId+'/posts/'+$scope.myDeedId).set($scope.deedObj);
   			}
 			
 		}
@@ -119,8 +120,6 @@ deedsAppTemplateDirectives.directive('myCommunityItem', function(){
 		templateUrl: 'templates/community-item.html',
 		controller: function($scope, $location){
 			var ref = new Firebase("https://burning-inferno-9477.firebaseio.com/");
-
-			
 			$scope.clickCommunityItem=function(event){
 
 				//Remove Modal
@@ -129,13 +128,7 @@ deedsAppTemplateDirectives.directive('myCommunityItem', function(){
 				$('.modal-backdrop').remove();
 
 				//Navigate to community landing page
-				$location.path("/community/"+$scope.myCommunityName);
-				joinCommunity();
-			}
-			
-			//TODO: build out this function with real values
-			var joinCommunity=function(){
-				ref.child("users/"+ref.getAuth().uid+"/communities/"+$scope.myCommunityName).set(1);
+				$location.path("/community/"+$scope.myCommunityId);
 			}
 		}
 	}

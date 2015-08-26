@@ -18,7 +18,7 @@
 
             <label>Community</label>
             <select ng-model="communitySelection" convert-to-number>
-              <option ng-repeat="community in userCommunities">{{community.name}}</option>
+              <option ng-repeat="(key, val) in userCommunities" value="{{key}}">{{val.name}}</option>
             </select>
 
             <button type="submit" class="btn btn-default" ng-click="submitPost($event)">Create</button>

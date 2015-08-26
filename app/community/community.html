@@ -1,3 +1,10 @@
 <div class="jumbotron">
-<h1>{{myCommunityName}}</h1>
+<h1>{{communityObj.name}}</h1>
+<h2>Founder: {{communityObj.createdBy}}</h2>
+
+
+<button type="button" class="btn btn-default" ng-click="joinCommunity($event)">
+	<span class="glyphicon glyphicon-ok" aria-hidden="true">Join</span>
+</button>
 </div>
+

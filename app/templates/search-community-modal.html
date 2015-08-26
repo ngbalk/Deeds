@@ -12,8 +12,8 @@
         <div class="modal-body">
           <div id="select-community-error-alert-box"></div>
     			<div class="form-group">
-            <li ng-repeat="community in communityList">
-    				  <my-community-item my-community-id="" my-community-name="{{community.name}}" my-community-host="{{community.createdBy}}"></my-community-item>
+            <li ng-repeat="(key, val) in communityList">
+    				  <my-community-item my-community-id="{{key}}" my-community-name="{{val.name}}" my-community-host="{{val.createdBy}}"></my-community-item>
             </li>
 
     			</div>

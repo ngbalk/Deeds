@@ -7,7 +7,7 @@ var deedsAppCommunityModule = angular.module('deedsAppCommunityModule', []);
 
 deedsAppCommunityModule.config(['$routeProvider', function($routeProvider) {
   $routeProvider
-  .when('/community/:myCommunityName', {
+  .when('/community/:myCommunityId', {
     templateUrl: 'community/community.html',
     controller: 'CommunityCtrl'
   });
@@ -28,6 +28,24 @@ deedsAppCommunityModule.controller('CommunityCtrl', ['$scope', 'authWallRedirect
 	var ref = new Firebase("https://burning-inferno-9477.firebaseio.com/");
   	var authData = ref.getAuth();
   	
-	$scope.myCommunityName=$routeParams.myCommunityName;
+	ref.child("communities/"+$routeParams.myCommunityId).on("value", function(snapshot) {
+		$scope.communityObj=snapshot.val();
+		console.log($scope.communityObj);
+
+		//Update the DOM
+    	if(!$scope.$$phase) {
+        	$scope.$apply();
+    	}
+	});
+
+	$scope.joinCommunity=function(){
+		//Add community to User's community list.
+		ref.child("users/"+authData.uid+"/communities/"+$routeParams.myCommunityId).set({"member":true, "name":$scope.communityObj.name});
+
+		//Update Community's member list
+		ref.child("communities/"+$routeParams.myCommunityId+"/members/"+authData.uid).set(true);
+
+		console.log("User " + authData.uid + " joined community " + $scope.communityObj.name);
+	}
 
 }]);

@@ -18,5 +18,5 @@ var deedsApp = angular.module('deedsApp', [
 ]);
 
 deedsApp.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/login'});
+  $routeProvider.otherwise({redirectTo: '/home'});
 }]);
