@@ -35,7 +35,15 @@ deedsAppCommunityModule.controller('CommunityCtrl', ['$scope', 'authWallRedirect
     	if(!$scope.$$phase) {
         	$scope.$apply();
     	}
+
+
 	});
+
+    //Check if already a member of community
+	if(authData.uid in $scope.communityObj.members){
+		document.getElementById("joinCommunity").innerHTML="Joined!";
+		document.getElementById("joinCommunity").disabled="disabled";
+	}
 
 	$scope.joinCommunity=function(){
 		//Add community to User's community list.
@@ -43,6 +51,12 @@ deedsAppCommunityModule.controller('CommunityCtrl', ['$scope', 'authWallRedirect
 
 		//Update Community's member list
 		ref.child("communities/"+$routeParams.myCommunityId+"/members/"+authData.uid).set(true);
+
+		//Disable button after joining
+		document.getElementById("joinCommunity").innerHTML="Joined!";
+		document.getElementById("joinCommunity").disabled="disabled";
 	}
+
+
 
 }]);

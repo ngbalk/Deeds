@@ -113,12 +113,14 @@ deedsAppHomeModule.controller('CreateCommunityCtrl', ['$scope', '$location', 'au
     var newCommunityObj = {
       name: $scope.newCommunityName,
       createdBy: authData.uid,
-      timestamp: Date.now()
+      timestamp: Date.now(),
+      members: {}
     };
-    communitiesRef.push(newCommunityObj);
-    
-    //Should a user automatically join the community he creates?
-    //userCommunitiesRef.child($scope.newCommunityName).set(newCommunityObj);
+
+    //Join community
+    newCommunityObj["members"][authData.uid]=true;
+    var communityKey = communitiesRef.push(newCommunityObj).key();
+    ref.child("users/"+authData.uid+"/communities/"+communityKey).set({"member":true, "name":newCommunityObj.name});
   }
 
 }]);
