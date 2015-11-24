@@ -1,0 +1,23 @@
+{
+  "": {
+    "dependencies": {
+      "groupId": "",
+      "artifactId": "",
+      "version": ""
+    }
+  },
+  "this": {
+    "dependencies": {
+      "groupId": "adosifh",
+      "artifactId": "adoifh",
+      "version": "adsoif"
+    }
+  },
+  "thisadsf": {
+    "dependencies": {
+      "groupId": "adosifhadsf",
+      "artifactId": "adoifhadsf",
+      "version": "adsoifasdf"
+    }
+  }
+}

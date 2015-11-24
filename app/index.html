@@ -1,41 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="deedsApp">
+<html lang="en" ng-app="jpmcApp">
 <head>
   <meta charset="utf-8">
-  <title>My AngularJS App</title>
-  <link rel="stylesheet" href="app.css">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <title>JPMC OSS Management Program</title>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="bower_components/angular/angular.js"></script>
-  <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script> 
-  <script src="https://cdn.firebase.com/libs/angularfire/0.9.0/angularfire.min.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="app.js"></script>
-  <script src="login/login.js"></script>
-  <script src="signup/signup.js"></script>
-  <script src="filters/filters.js"></script>
-  <script src="services/services.js"></script>
-  <script src="home/home.js"></script>
-  <script src="deed/deed.js"></script>
-  <script src="feed/feed.js"></script>
-  <script src="community/community.js"></script>
+  <script src="index.js"></script>
   <script src="directives/template-directives.js"></script>
-  <script src="components/version/version.js"></script>
-  <script src="components/version/version-directive.js"></script>
-  <script src="components/version/interpolate-filter.js"></script>
-  <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
-</head>
-<body>
-
-  <ul class="nav nav-tabs">
-    <li role="presentation"><a href="#/home"><h2>Deeds</h2></a></li>
-    <li role="presentation"><a href="#/login">login</a></li>
-    <li role="presentation"><a href="#/signup">signup</a></li>
-    <li role="presentation"><a href="#/feed">feed</a></li>
-  </ul>
-  <div ng-view></div>
-
+<body ng-controller="IndexCtrl">
+<my-create-component-modal></my-create-component-modal>
+<br><br><br><br><br><br><br><br><br><br><br><br><br>
+<h3><pre>{{componentsAsString}}</pre></h3>
 
 </body>
 </html>

@@ -1,0 +1,45 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Add Component
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add Components</h4>
+      </div>
+      <div class="modal-body">
+
+      <div class="input-group">
+        <span class="input-group-addon" id="sizing-addon2">Component Name</span>
+        <input ng-model="componentName"type="text" class="form-control">
+      </div>
+      <br>
+      <br>
+      <div class="input-group">
+        <span class="input-group-addon" id="sizing-addon2">Group Id</span>
+        <input ng-model="groupId" type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon2">
+      </div>
+
+      <div class="input-group">
+        <span class="input-group-addon" id="sizing-addon2">Artifact Id</span>
+        <input ng-model="artifactId" type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon2">
+      </div>
+
+      <div class="input-group">
+        <span class="input-group-addon" id="sizing-addon2">Version #</span>
+        <input ng-model="version" type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon2">
+      </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button ng-click="addComponent()"type="button" class="btn btn-primary">Add</button>
+      </div>
+
+    </div>
+  </div>
+</div>

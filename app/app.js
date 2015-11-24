@@ -2,21 +2,9 @@
 
 /* Bootstrapping app's modules */
 
-var deedsApp = angular.module('deedsApp', [
+var jpmcApp = angular.module('jpmcApp', [
   'ngRoute',
-  'deedsAppLoginModule',
-  'deedsAppSignUpModule',
-  'deedsAppHomeModule',
-  'deedsAppFilters',
-  'myApp.version',
-  'firebase',
-  'deedsAppTemplateDirectives',
-  'deedsAppFeedModule',
-  'deedsAppServices',
-  'deedsAppDeedModule',
-  'deedsAppCommunityModule'
+  'jpmcAppIndexModule',
+  'jpmcAppTemplateDirectives'
 ]);
 
-deedsApp.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/home'});
-}]);
